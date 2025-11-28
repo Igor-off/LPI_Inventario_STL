@@ -3,13 +3,17 @@
 #include <iostream>
 #include <iomanip>
 
-#define TESTE_INICIALIZADOR_ESTOQUE 0   //< Testar instância do estoque por lista inicializadora
-#define TESTE_ADD_PRODUTO 0             //< Testar método de adição de produto ao estoque 
-#define TESTE_REMOVER_PRODUTO 0         //< Testar método de remoção de produto ao estoque
-#define TESTE_BUSCA_POR_NOME 0          //< Testar busca de produto por nome do produto
-#define TESTE_BUSCA_POR_CATEGORIA 0     //< Testar a busca de produtos por categoria
-#define TESTE_VENDA 0                   //< Testar venda de produto
+// Para ativar os testes coloque 1, ou 0 para desabilitar antes de compilar
 
+#define TESTE_INICIALIZADOR_ESTOQUE 0   //< Testar instância do estoque por lista inicializadora
+#define TESTE_ADD_PRODUTO 1             //< Testar método de adição de produto ao estoque 
+#define TESTE_REMOVER_PRODUTO 1         //< Testar método de remoção de produto ao estoque
+#define TESTE_BUSCA_POR_NOME 1          //< Testar busca de produto por nome do produto
+#define TESTE_BUSCA_POR_CATEGORIA 1     //< Testar a busca de produtos por categoria
+#define TESTE_VENDA 1                   //< Testar venda de produto
+/**
+* Cria um estoque de produtos definido na própria função
+*/
 Inventario criarEstoqueTeste();
 
 int main(int arc, char* argv[]) {
@@ -20,8 +24,6 @@ int main(int arc, char* argv[]) {
     i1.exibirEstoque();
     //  III -   Verificar se o set de categorias e os mapas de contagem e valores por categoria atualizam corretamente quando criamos um estoque
     i1.exibirInventario();
-
-
 #endif  // fim doTESTE_CONSTRUTOR_ESTOQUE
 
 #if TESTE_ADD_PRODUTO
@@ -49,19 +51,19 @@ int main(int arc, char* argv[]) {
     i2.addProduto(p3);
     i2.exibirEstoque();
     i2.exibirInventario();
-
 #endif // fim doTESTE_CONSTRUTOR_ESTOQUE   
 
 #if TESTE_REMOVER_PRODUTO
     Inventario i3 = criarEstoqueTeste();
     //  I   -   Exibir estoque e as informações do inventário atual antes da remoção
-    std::cout   << std::setw(23) << " " << "> Testar primeira remoção de produto <" << std::endl
+    std::cout   << std::string(90, '-') << std::endl  
+                << std::setw(25) << " " << "> Testar primeira remoção de produto <" << std::endl
                 << std::string(90, '-') << std::endl
-                << "--> [8] file de frango inicia com 15 itens e deve ir para 14 após remoção." << std::endl
+                << "--> [8] frango inteiro inicia com 15 itens e deve ir para 14 após remoção." << std::endl
                 << "--> [19] quinoa deve sumir pois tem apenas 1 item." << std::endl
                 << "!!! Como quinoa é o único item da categoria grão, a categoria também deve sumir." << std::endl
                 << std::string(90, '-') << std::endl
-                << std::setw(30) << " " << "Estoque antes da remoção" << std::endl;
+                << std::setw(32) << " " << "Estoque antes da remoção" << std::endl;
     i3.exibirEstoque();
     i3.exibirInventario();
 
@@ -79,7 +81,7 @@ int main(int arc, char* argv[]) {
     //  Verificar se o set de categorias é atualizado
     //  como grão so possui um único produto, a categoria grão deve ser excluida.
     //  Além disso, os mapas de contagem e valores por categoria devem ser atualizados corretamente.
-    std::cout << std::endl << std::setw(30) << " " << "Estoque após da remoção" << std::endl; 
+    std::cout << std::endl << std::setw(32) << " " << "Estoque após da remoção" << std::endl; 
     i3.exibirEstoque();
     i3.exibirInventario();
 
@@ -95,7 +97,6 @@ int main(int arc, char* argv[]) {
     } catch(const std::runtime_error& e) {
         std::cerr << e.what() << std::endl;
     }
-
 #endif  //  fim do TESTE_REMOVER_PRODUTO
 
 #if TESTE_BUSCA_POR_NOME 
@@ -112,24 +113,12 @@ int main(int arc, char* argv[]) {
         std::cout << std::endl;
     } else {
         i4.produtoNaoEncontrado(produto_buscado);
-    }
-
-    //  I.II    -   Produto não pertence ao estoque
-    produto_buscado = "pessego";
-    resultado = i4.buscarProduto(produto_buscado);
-    if(resultado.has_value()) {
-        resultado->exibirProduto();
-    } else {
-        i4.produtoNaoEncontrado(produto_buscado);
     }   
-
 #endif // Fim do TESTE_BUSCA
 
 #if TESTE_BUSCA_POR_CATEGORIA
     //  I   -   Criar o estoque e exibir para compararmos
     Inventario i5 = criarEstoqueTeste();
-    i5.exibirEstoque();
-
     //  II      -   Filtrar produtos por categoria usando o método listarPorCategoria() da classe Inventario    
     //  Que retorna um vector com os produtos da mesma categoria encontrados
     //  ou um vector vazio, caso não tenha produtos da categoria indicada
@@ -137,7 +126,7 @@ int main(int arc, char* argv[]) {
     //  Além de imprimir os produtos da categoria indicada
     //  usar os métodos que retornam os valores dos mapas de contagem e de valor individual por categoria
     std::cout   << std::string(90, '-') << std::endl
-                << "Testar a filtragem por categoria PADARIA" << std::endl;
+                << std::setw(25) << " " << "Testar a filtragem por categoria PADARIA" << std::endl;
     Categoria categoria_teste = Categoria::PADARIA;
     try {
         i5.exibirPorCategoria(categoria_teste);
@@ -158,35 +147,51 @@ int main(int arc, char* argv[]) {
 #endif // Fim do TESTE_BUSCA_POR_CATEGORIA   
 
 #if TESTE_VENDA
-
+    std::cout   << std::string(90, '-') << std::endl
+                << std::setw(28) << " "  << "REGISTRAR VENDA DE 1 SHAMPOO[2]" << std::endl;   
     //  I   -   Inicializar inventário
     Inventario i6 = criarEstoqueTeste();
     i6.exibirEstoque();
+    i6.exibirInventario();
 
     //  II  -   Vender um produto
     std::string produto_vendido("shampoo");
-    int quantidade(10);
+    int quantidade(1);
     try {
-        i6.vender(produto_vendido, quantidade);
+        i6.registrarvenda(produto_vendido, quantidade);
         i6.exibirHistoricoVenda();
     } catch(const std::runtime_error& e) {
         std::cerr << e.what() << std::endl;
     }
 
+    std::cout   <<  std:: endl << std::string(90, '-') << std ::endl
+                << std::setw(25) << " "  << "REGISTRAR VENDA DE 5 PAO DE FORMA[5]" << std::endl;
+    std::string proximo_produto("pao de forma");
+    int proxima_quantidade(5);
+    try {
+        i6.registrarvenda(proximo_produto, proxima_quantidade);
+        i6.exibirHistoricoVenda();
+    } catch(const std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
     //  III -   Vamos ver se o estoque atualizou corretamente
     std::cout   << std::endl 
-                << std::setw(30) << " " << std::left << "Estoque atualizado" << std::endl;
+                << std::string(90, '-') << std::endl
+                << std::setw(35) << " " << std::left << "ESTOQUE ATUALIZADO" << std::endl;
     i6.exibirEstoque();
+    i6.exibirInventario();
 
     //  IV  -   Vamos testar se retirarmos uma quantidade excedente
+    std::cout   << std::endl << std::string(90, '-') << std::endl
+                << std::setw(13) << " "  << "TESTAR REGISTRAR VENDA COM QUANTIDADE DIVERGENTE DO ESTOQUE" << std::endl
+                << std::string(90, '-') << std::endl;
     quantidade = 20;
     try {
-        i6.vender(produto_vendido, quantidade);
+        i6.registrarvenda(produto_vendido, quantidade);
         i6.exibirHistoricoVenda();
     } catch(const std::runtime_error& e) {
         std::cerr << e.what() << std::endl;
     }
-
 #endif // Fim do TEST_VENDA
 
     return EXIT_SUCCESS;

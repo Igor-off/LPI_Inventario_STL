@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/prog.dir/src/main.cpp.o CMakeFiles/prog.dir/src/inventario.cpp.o CMakeFiles/prog.dir/src/produto.cpp.o -o prog 

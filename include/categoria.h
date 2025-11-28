@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-
+//!< Categorias pré-definidas e aceitas.
 enum class Categoria {
     BEBIDA = 0,
     CARNE,
@@ -18,6 +18,10 @@ enum class Categoria {
     PADARIA,
     INDEFINIDA
 };
+/**
+*   Converte o tipo Categoria em string para impressão.
+*   @param cat tipo Categoria a ser convertido
+*/
 inline std::string categoriaToString(Categoria cat) {
     switch(cat) {
         case Categoria::BEBIDA:        return "bebida";
@@ -31,10 +35,6 @@ inline std::string categoriaToString(Categoria cat) {
         case Categoria::PADARIA:        return "padaria";
         default:                        return "Indefinida";
     }
-}
-inline std::ostream& operator<<(std::ostream& os, Categoria cat) {
-    os << categoriaToString(cat);
-    return os;
 }
 
 #endif

@@ -1,0 +1,3 @@
+/home/b321/LP1/LPI_Inventario_STL/buildclear/CMakeFiles/testes.dir
+/home/b321/LP1/LPI_Inventario_STL/buildclear/CMakeFiles/edit_cache.dir
+/home/b321/LP1/LPI_Inventario_STL/buildclear/CMakeFiles/rebuild_cache.dir

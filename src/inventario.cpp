@@ -66,23 +66,24 @@
         }
         if(!encontrado) {
             // Se não achou o produto informar que o produto não faz parte do estoque
-            throw std::runtime_error(">>> O produto informado não faz parte do estoque");
+            throw std::runtime_error("ERRO: O produto informado não faz parte do estoque");
         }
     }
-    void Inventario::vender(const std::string& nome_do_produto, int quantidade) {
+    void Inventario::registrarvenda(const std::string& nome_do_produto, int quantidade) {
         //  I   -   Procurar o produto no estoque do inventário
         auto produto_a_vender = buscarProduto(nome_do_produto);
-        //  II  -   Se encontrou o produto e a quantidade contida for menor ou igual a solicitada, retirá-las
+        //  II  -   Se encontrou o produto e a quantidade contida for menor ou igual a solicitada, retirar
         if(produto_a_vender.has_value()) {
             if(produto_a_vender->getEstoque() >= quantidade) {
-                for(int i = 0; i < quantidade; ++i) {
+                for(int i = 1; i <=  quantidade; ++i) {
                     rmvProduto(nome_do_produto);
                 }
                 //  III -   Adicionar os produto a list de histórico de vendas
                 Produto h_produto{nome_do_produto, produto_a_vender->getPreco(), produto_a_vender->getCategoria(), quantidade};
                 historico.push_back(h_produto);
             } else {
-                throw std::runtime_error(">>> Só há " + std::to_string(produto_a_vender->getEstoque()) + " unidades disponíveis no estoque.");
+                throw std::runtime_error("ERRO: Foi tentado registrar a venda de \"" + std::to_string(quantidade) + "\" " + nome_do_produto + ".\n" +
+                                         "      Só há " + std::to_string(produto_a_vender->getEstoque()) + " unidades disponíveis no estoque.");
             }
         //  Caso não encontre, tratar excessão
         } else {
@@ -208,7 +209,7 @@
     void Inventario::exibirHistoricoVenda() const {
         double valor_vendas{0};
         std::cout   << std::string(90, '-') << std::endl
-                    << std::setw(30) << " " << std::left << "Histórico de vendas" << std::endl
+                    << std::setw(34) << " " << std::left << "Histórico de vendas" << std::endl
                     << std::string(90, '-') << std::endl << std::endl;
         for(const auto& produto : historico) {
             //  Na venda, a variável estoque se torna a quantidade de itens vendido
